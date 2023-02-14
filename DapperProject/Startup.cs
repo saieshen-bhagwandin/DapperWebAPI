@@ -30,6 +30,7 @@ namespace DapperProject
         {
             services.AddSingleton<DapperContext>();
             services.AddScoped<ICompanyRepository, CompanyRepository>();
+            services.AddScoped<IEmployeeRepository, EmployeeRepository>();
             services.AddControllers();
         }
 
