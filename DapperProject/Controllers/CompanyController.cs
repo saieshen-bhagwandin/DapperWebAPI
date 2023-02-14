@@ -1,4 +1,5 @@
-﻿using DapperProject.Interfaces;
+﻿using DapperProject.Dto;
+using DapperProject.Interfaces;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -55,6 +56,29 @@ namespace DapperProject.Controllers
             }
 
 
+        }
+
+
+        [HttpPost]
+        public async Task<IActionResult> CreateCompany(CompanyDTO company)
+        {
+            try
+            {
+
+                var createdcompany = await _companyRepo.CreateCompany(company);
+
+                return CreatedAtRoute("CompanyById", new { id = createdcompany.Id }, createdcompany);
+
+
+            }
+            catch (Exception ex) {
+
+
+                return StatusCode(500, ex.Message);
+
+            }
+        
+        
         }
 
 

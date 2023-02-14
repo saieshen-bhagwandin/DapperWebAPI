@@ -23,19 +23,35 @@ namespace DapperProject.Controllers
         [HttpGet( Name = "GetEmployees")]
         public async Task<IActionResult> GetEmployees() {
 
+            try { 
+
             var employee = await employeeRepo.GetEmployees();
 
             return Ok(employee);
+
+               }catch (Exception ex) {
+
+                return StatusCode(500, ex.Message);
+              }
+
         }
 
         [HttpGet("{id}",Name = "GetEmployeeById")]
         public async Task<IActionResult> GetEmployeeById(int id)
         {
-
-            var employee = await employeeRepo.GetEmployeeById(id);
+            try
+            {
+                var employee = await employeeRepo.GetEmployeeById(id);
 
             return Ok(employee);
+
+            } catch (Exception ex){
+
+             return StatusCode(500, ex.Message);
+            }
         }
 
     }
+
+
 }

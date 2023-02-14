@@ -1,4 +1,5 @@
 ﻿using DapperProject.Classes;
+using DapperProject.Dto;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,6 +12,8 @@ namespace DapperProject.Interfaces
         public Task<IEnumerable<Company>> GetCompanies();
 
         public Task<Company> GetCompanyById(int id);
+
+        public Task<Company> CreateCompany(CompanyDTO company);
 
     }
 }
