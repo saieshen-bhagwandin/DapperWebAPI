@@ -1,9 +1,11 @@
 ﻿using Dapper;
 using DapperProject.Classes;
 using DapperProject.Context;
+using DapperProject.Dto;
 using DapperProject.Interfaces;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -45,5 +47,37 @@ namespace DapperProject.Repository
             }
         }
 
+        public async Task<Employee> CreateEmployee(EmployeeDTO employee)
+        {
+            var query = "INSERT INTO Employees (Name,Age,Position,CompanyId) VALUES (@Name,@Age,@Position,@CompanyId)" +
+                "SELECT CAST(SCOPE_IDENTITY() as int)";
+
+            var parameters = new DynamicParameters();
+
+            parameters.Add("Name", employee.Name, DbType.String);
+            parameters.Add("Age", employee.Age, DbType.Int32);
+            parameters.Add("Position", employee.Position, DbType.String);
+            parameters.Add("CompanyId", employee.CompanyId, DbType.Int32);
+
+            using (var connection = _context.CreateConnection()) {
+
+                var id = await connection.QuerySingleAsync<int>(query, parameters);
+
+                var createdemployee = new Employee
+                {
+
+                    Id = id,
+                    Name = employee.Name,
+                    Age = employee.Age,
+                    Position = employee.Position,
+                    CompanyId = employee.CompanyId
+
+                };
+
+
+                return createdemployee;
+            
+            }
+        }
     }
 }

@@ -1,4 +1,5 @@
-﻿using DapperProject.Interfaces;
+﻿using DapperProject.Dto;
+using DapperProject.Interfaces;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -20,38 +21,67 @@ namespace DapperProject.Controllers
             employeeRepo = _employeeRepository;
         }
 
-        [HttpGet( Name = "GetEmployees")]
-        public async Task<IActionResult> GetEmployees() {
+        [HttpGet(Name = "GetEmployees")]
+        public async Task<IActionResult> GetEmployees()
+        {
 
-            try { 
+            try
+            {
 
-            var employee = await employeeRepo.GetEmployees();
+                var employee = await employeeRepo.GetEmployees();
 
-            return Ok(employee);
+                return Ok(employee);
 
-               }catch (Exception ex) {
+            }
+            catch (Exception ex)
+            {
 
                 return StatusCode(500, ex.Message);
-              }
+            }
 
         }
 
-        [HttpGet("{id}",Name = "GetEmployeeById")]
+        [HttpGet("{id}", Name = "GetEmployeeById")]
         public async Task<IActionResult> GetEmployeeById(int id)
         {
             try
             {
                 var employee = await employeeRepo.GetEmployeeById(id);
 
-            return Ok(employee);
+                return Ok(employee);
 
-            } catch (Exception ex){
-
-             return StatusCode(500, ex.Message);
             }
+            catch (Exception ex)
+            {
+
+                return StatusCode(500, ex.Message);
+            }
+
+
         }
 
-    }
 
+        [HttpPost(Name = "CreateEmployee")]
+        public async Task<IActionResult> CreateEmployee(EmployeeDTO employee)
+        {
+
+            try
+            {
+                var createdemployee = await employeeRepo.CreateEmployee(employee);
+
+                return Ok(createdemployee);
+
+            }
+            catch (Exception ex)
+            {
+
+                return StatusCode(500, ex.Message);
+            }
+
+
+        }
+
+
+    }
 
 }
