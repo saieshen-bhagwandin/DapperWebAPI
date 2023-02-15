@@ -15,5 +15,7 @@ namespace DapperProject.Interfaces
 
         public Task<Company> CreateCompany(CompanyDTO company);
 
+        public Task UpdateCompany(Company company);
+
     }
 }

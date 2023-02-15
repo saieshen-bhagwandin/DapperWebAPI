@@ -82,7 +82,7 @@ namespace DapperProject.Repository
 
         public async Task UpdateEmployee(Employee employee)
         {
-            var query = "UPDATE Employees SET NAME = @Name, Age = @Age, Position = @Position, CompanyId = @CompanyId WHERE Id = @Id";
+            var query = "UPDATE Employees SET Name = @Name, Age = @Age, Position = @Position, CompanyId = @CompanyId WHERE Id = @Id";
 
             var parameters = new DynamicParameters();
 

@@ -1,4 +1,5 @@
-﻿using DapperProject.Dto;
+﻿using DapperProject.Classes;
+using DapperProject.Dto;
 using DapperProject.Interfaces;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -73,12 +74,32 @@ namespace DapperProject.Controllers
             }
             catch (Exception ex) {
 
-
                 return StatusCode(500, ex.Message);
 
             }
         
         
+        }
+
+
+        [HttpPut]
+
+        public async Task<IActionResult> UpdateCompany(Company company) {
+
+            try
+            {
+               await _companyRepo.UpdateCompany(company);
+
+                return CreatedAtRoute("CompanyById", new { id = company.Id }, company);
+
+
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, ex.Message);
+            }
+
+
         }
 
 

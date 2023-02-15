@@ -75,5 +75,25 @@ namespace DapperProject.Repository
 
             }
         }
+
+        public async Task UpdateCompany(Company company)
+        {
+            var query = "UPDATE Companies SET Name = @Name, Address = @Address, Country = @Country WHERE Id = @Id";
+
+            var parameters = new DynamicParameters();
+
+            parameters.Add("Id", company.Id, DbType.Int32);
+            parameters.Add("Name", company.Name, DbType.String);
+            parameters.Add("Address", company.Address, DbType.String);
+            parameters.Add("Country", company.Country, DbType.String);
+
+            using (var connection = _context.CreateConnection()) {
+
+
+                await connection.ExecuteAsync(query, parameters);
+            
+            }
+
+        }
     }
 }
