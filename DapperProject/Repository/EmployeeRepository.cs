@@ -79,5 +79,24 @@ namespace DapperProject.Repository
             
             }
         }
+
+        public async Task UpdateEmployee(Employee employee)
+        {
+            var query = "UPDATE Employees SET NAME = @Name, Age = @Age, Position = @Position, CompanyId = @CompanyId WHERE Id = @Id";
+
+            var parameters = new DynamicParameters();
+
+            parameters.Add("Id", employee.Id, DbType.Int32);
+            parameters.Add("Name", employee.Name, DbType.String);
+            parameters.Add("Age", employee.Age, DbType.Int32);
+            parameters.Add("Position", employee.Position, DbType.String);
+            parameters.Add("CompanyId", employee.CompanyId, DbType.Int32);
+
+            using (var connection = _context.CreateConnection()) {
+
+                await connection.ExecuteAsync(query, parameters);
+            
+            }
+        }
     }
 }

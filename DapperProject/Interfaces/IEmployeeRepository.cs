@@ -15,6 +15,7 @@ namespace DapperProject.Interfaces
 
         public Task<Employee> CreateEmployee(EmployeeDTO employee);
 
+        public Task UpdateEmployee(Employee employee);
 
     }
-}
+}       

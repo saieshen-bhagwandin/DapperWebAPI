@@ -1,4 +1,5 @@
-﻿using DapperProject.Dto;
+﻿using DapperProject.Classes;
+using DapperProject.Dto;
 using DapperProject.Interfaces;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -41,14 +42,14 @@ namespace DapperProject.Controllers
 
         }
 
-        [HttpGet("{id}", Name = "GetEmployeeById")]
+        [HttpGet("{id}", Name = "EmployeeById")]
         public async Task<IActionResult> GetEmployeeById(int id)
         {
             try
             {
                 var employee = await employeeRepo.GetEmployeeById(id);
 
-                return Ok(employee);
+                return CreatedAtRoute("EmployeeById", new { id = employee.Id }, employee);
 
             }
             catch (Exception ex)
@@ -77,6 +78,28 @@ namespace DapperProject.Controllers
 
                 return StatusCode(500, ex.Message);
             }
+
+
+        }
+
+
+
+        [HttpPut]
+        public async Task<IActionResult> UpdatedEmployee(Employee employee) {
+
+            try
+            {
+                await employeeRepo.UpdateEmployee(employee);
+
+                return CreatedAtRoute("EmployeeById", new { id = employee.Id }, employee);
+
+            }
+            catch (Exception ex)
+            {
+
+                return StatusCode(500, ex.Message);
+            }
+
 
 
         }
