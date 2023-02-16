@@ -102,6 +102,24 @@ namespace DapperProject.Controllers
 
         }
 
+        [HttpGet]
+        [Route("CompanyByEmployeeId/{id}")]
+
+        public async Task<IActionResult> GetCompanyByEmployeeId(int id)
+        {
+            try
+            {
+                var company = await _companyRepo.GetCompanyByEmployeeId(id);
+                return Ok(company);
+
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, ex.Message);
+            }
+
+        }
+
 
     }
 }

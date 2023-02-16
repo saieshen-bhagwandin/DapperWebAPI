@@ -17,5 +17,8 @@ namespace DapperProject.Interfaces
 
         public Task UpdateCompany(Company company);
 
+        public Task<Company> GetCompanyByEmployeeId(int id);
+
+
     }
 }

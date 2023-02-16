@@ -63,6 +63,22 @@ namespace DapperProject.Repository
 
         }
 
+        public async Task<Company> GetCompanyByEmployeeId(int id)
+        {
+            var procedurename = "ShowCompanyForProvidedEmployeeId";
+
+            var parameters = new DynamicParameters();
+
+            parameters.Add("Id", id, DbType.Int32, ParameterDirection.Input);
+
+            using (var connection = _context.CreateConnection()) {
+
+                var company = await connection.QueryFirstOrDefaultAsync<Company>(procedurename, parameters, commandType : CommandType.StoredProcedure);
+
+                return company;
+            }
+        }
+
         public async Task<Company> GetCompanyById(int id)
         {
             var query = "SELECT * FROM Companies WHERE Id = @id";
@@ -89,7 +105,7 @@ namespace DapperProject.Repository
 
             using (var connection = _context.CreateConnection()) {
 
-
+   
                 await connection.ExecuteAsync(query, parameters);
             
             }
